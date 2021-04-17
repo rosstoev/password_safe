@@ -6,10 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="You already have an account!")
  */
 class User implements UserInterface
 {
@@ -158,7 +160,7 @@ class User implements UserInterface
 
     public function getPassword(): string
     {
-        return $this->password;
+        return (string) $this->password;
     }
 
     public function getSalt()
