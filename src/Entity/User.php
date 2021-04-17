@@ -21,9 +21,9 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $username;
+    private $email;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\WebsiteData", mappedBy="user")
@@ -50,14 +50,14 @@ class User
      *
      * @see UserInterface
      */
-    public function getUsername(): string
+    public function getEmail(): string
     {
-        return (string) $this->username;
+        return (string)$this->email;
     }
 
-    public function setUsername(string $username): self
+    public function setEmail(string $email): self
     {
-        $this->username = $username;
+        $this->email = $email;
 
         return $this;
     }
@@ -69,7 +69,7 @@ class User
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+//        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
