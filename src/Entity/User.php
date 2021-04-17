@@ -26,6 +26,16 @@ class User
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $familyName;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\WebsiteData", mappedBy="user")
      */
     private $websites;
@@ -107,6 +117,30 @@ class User
                 $website->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getFamilyName(): ?string
+    {
+        return $this->familyName;
+    }
+
+    public function setFamilyName(string $familyName): self
+    {
+        $this->familyName = $familyName;
 
         return $this;
     }
