@@ -5,11 +5,14 @@ namespace App\Security;
 
 
 use App\DTO\LoginDTO;
+use App\Entity\User;
 use App\Form\LoginFormType;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -28,6 +31,8 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     private FormFactoryInterface $formFactory;
     private UserPasswordEncoderInterface $passwordEncoder;
     private UrlGeneratorInterface $urlGenerator;
+    private Security $security;
+    private RouterInterface $router;
 
     public function __construct(
         FormFactoryInterface $formFactory,
@@ -83,7 +88,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('login_level_two'));
     }
 
     protected function getLoginUrl(): string

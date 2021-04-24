@@ -2,23 +2,16 @@ security:
     encoders:
         App\Entity\User:
             algorithm: auto
-        App\Entity\Admin:
-            algorithm: auto
-
 
     providers:
         user_provider:
             id: App\Security\UserProvider
-        app_user_provider:
-            entity:
-                class: App\Entity\Admin
-                property: email
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        level_one:
+        main:
             pattern: ^/
             anonymous: true
             guard:
@@ -34,4 +27,5 @@ security:
 
 
     access_control:
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/user, roles: ROLE_USER }

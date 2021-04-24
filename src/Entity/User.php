@@ -32,6 +32,8 @@ class User implements UserInterface
      */
     private $password;
 
+    private bool $isGoogleAuthenticate = false;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -176,5 +178,21 @@ class User implements UserInterface
     public function eraseCredentials()
     {
 
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGoogleAuthenticate(): bool
+    {
+        return $this->isGoogleAuthenticate;
+    }
+
+    /**
+     * @param bool $isGoogleAuthenticate
+     */
+    public function setIsGoogleAuthenticate(bool $isGoogleAuthenticate): void
+    {
+        $this->isGoogleAuthenticate = $isGoogleAuthenticate;
     }
 }
