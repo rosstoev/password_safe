@@ -168,9 +168,9 @@ class User implements UserInterface
 
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
-
+        return (string)$this->email;
     }
 
     public function eraseCredentials()

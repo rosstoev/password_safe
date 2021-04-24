@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'components/navbar.html.twig' with {'active' : 'login'} %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <h1>Логин</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ form_start(form) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form.login) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

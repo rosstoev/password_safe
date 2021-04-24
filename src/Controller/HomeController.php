@@ -29,7 +29,6 @@ class HomeController extends AbstractController
     {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $userRepository->save($formData);
