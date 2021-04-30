@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\WebsiteData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 /**
  * @method WebsiteData|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,37 +18,43 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WebsiteDataRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private ParameterBagInterface $parameterBag;
+
+    public function __construct(ManagerRegistry $registry, ParameterBagInterface $parameterBag)
     {
         parent::__construct($registry, WebsiteData::class);
+        $this->parameterBag = $parameterBag;
     }
 
-    // /**
-    //  * @return WebsiteData[] Returns an array of WebsiteData objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function save(WebsiteData $websiteData, User $userData)
     {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+        try {
+            $encryptPassword = $websiteData->encryptPassword($this->parameterBag);
+            $websiteData->setPassword($encryptPassword);
+            $websiteData->setUser($userData);
+            $em->persist($websiteData);
+            $em->flush();
+            $em->commit();
+        } catch (\Exception $ex) {
+            $em->rollback();
+            throw $ex;
+        }
 
-    /*
-    public function findOneBySomeField($value): ?WebsiteData
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
     }
-    */
+
+    public function remove(WebsiteData $websiteData)
+    {
+        $em = $this->getEntityManager();
+        $em->beginTransaction();
+        try{
+            $em->remove($websiteData);
+            $em->flush();
+            $em->commit();
+        } catch (\Exception $ex){
+            $em->rollback();
+            throw $ex;
+        }
+    }
 }

@@ -22,9 +22,14 @@ class GoogleAuthenticator
 
     public function authenticate(LoginTwoDTO $data, User $user)
     {
-
+        $userSecret = $user->getSecret();
         $code = $data->getCode();
-        $secret = base64_decode($data->getSecret());
+        if (!empty($userSecret)) {
+            $secret = base64_decode($userSecret);
+        } else {
+            $secret = base64_decode($data->getSecret());
+        }
+
         $isValid = $this->googleAuthenticatorChecker->checkCode($secret, $code);
         if ($isValid){
             $user->setIsGoogleAuthenticate(true);

@@ -7,6 +7,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <a class="nav-link {% if active == 'home' %}active{% endif %}" href="{{ path('home') }}">Начало</a>
+                {% if app.user is not null %}
+                    <a class="nav-link {% if active == 'dashboard' %}active{% endif %}" href="{{ path('user_dashboard') }}">Дашборд</a>
+                    <a class="nav-link {% if active == 'add-website' %}active{% endif %}" href="{{ path('user_website-data_manage') }}">Добави</a>
+                {% endif %}
             </div>
             <div class="navbar-nav mt-2 mt-lg-0 mr-sm-2">
                 {% if app.user is not null %}
