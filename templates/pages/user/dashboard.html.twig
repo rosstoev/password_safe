@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    {% include "components/navbar.html.twig" with {"active" : "dashboard"} %}
+    <div class="container">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <h1>Моите уебсайтове</h1>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Име</th>
+                        <th scope="col">Парола</th>
+                        <th scope="col">Операции</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for website in websites %}
+                        <tr>
+                            <td>{{ website.url }}</td>
+                            <td>{{ website.password }}</td>
+                            <td>
+                                <a href="{{ path("user_website-data_manage", {"websiteData" : website.id}) }}" class="btn btn-primary" role="button">Редактирай</a>
+                                <a class="btn btn-danger" role="button" href="{{ path('user_website-data_remove', {'websiteData' : website.id}) }}">Изтрий</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

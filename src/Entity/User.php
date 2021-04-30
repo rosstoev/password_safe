@@ -45,7 +45,7 @@ class User implements UserInterface
     private $familyName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\WebsiteData", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\WebsiteData", mappedBy="user", cascade="all")
      */
     private $websites;
 

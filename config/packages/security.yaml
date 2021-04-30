@@ -1,3 +1,7 @@
+parameters:
+    first_key: V0RyG2PZpVotqJ+n5F8QTau8av+haF46aeLZkn0bIRg=
+    second_key: dO398lzoqQ9fNngRAD7wdF/67gzqlIBXN3HRhuv3oetv4UwnqMKdHhxv3haOgRWtv/DVWArmh9iIUXdCzuvO1w==
+    method: aes-256-cbc
 security:
     encoders:
         App\Entity\User:
