@@ -9,11 +9,13 @@
             </div>
         </div>
         <div class="py-3"></div>
-        <div class="row justify-content-md-center">
-            <div class="col-md-auto">
-                <img src="{{ qrCode }}" alt="qr-code">
+        {% if qrCode is defined and qrCode is not null %}
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <img src="{{ qrCode }}" alt="qr-code">
+                </div>
             </div>
-        </div>
+        {% endif %}
         <div class="py-3"></div>
         {% if error is defined and error is not null %}
             <div class="row justify-content-md-center">
@@ -27,8 +29,8 @@
         <div class="row">
             <div class="col-12">
                 {{ form_start(form) }}
-                    {{ form_row(form.code) }}
-                    {{ form_row(form.check) }}
+                {{ form_row(form.code) }}
+                {{ form_row(form.check) }}
                 {{ form_end(form) }}
             </div>
         </div>

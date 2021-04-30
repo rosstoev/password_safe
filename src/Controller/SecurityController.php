@@ -9,6 +9,8 @@ use App\DTO\LoginTwoDTO;
 use App\Entity\User;
 use App\Form\LoginFormType;
 use App\Form\LoginLevelTwoFormType;
+use App\Repository\UserRepository;
+use App\Security\GoogleAuthenticator as SecurityGoogleAuth;
 use Google\Authenticator\GoogleQrUrl;
 use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,20 +44,28 @@ class SecurityController extends AbstractController
     /**
      * @Route ("/login/level-two", name="login_level_two")
      */
-    public function googleLogin(Request $request, \App\Security\GoogleAuthenticator $googleAuthenticator): Response
+    public function googleLogin(Request $request, SecurityGoogleAuth $googleAuthenticator, UserRepository $userRepo): Response
     {
         /** @var User $user */
         $user = $this->getUser();
+        $userSecret = $user->getSecret();
         if (!empty($user)) {
             $form = $this->createForm(LoginLevelTwoFormType::class);
-            $secret = base64_decode($form->get('secret')->getData());
-            $qrCode = GoogleQrUrl::generate($user->getEmail(), $secret, 'PassSafe');
+            if (empty($userSecret)) {
+                $secret = base64_decode($form->get('secret')->getData());
+                $qrCode = GoogleQrUrl::generate($user->getEmail(), $secret, 'PassSafe');
+            }
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 /** @var LoginTwoDTO $formData */
                 $formData = $form->getData();
                 $googleAuthenticator->authenticate($formData, $user);
                 if ($user->isGoogleAuthenticate() == true) {
+                    if (empty($userSecret)) {
+                        $foundUser = $userRepo->findOneBy(['id' => $user->getId()]);
+                        $foundUser->setSecret($formData->getSecret());
+                        $userRepo->update($foundUser);
+                    }
                     return $this->redirectToRoute('user_dashboard');
                 } else {
                     $error = 'Невалиден код, моля, опитайте отново!';
@@ -69,7 +79,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.level-two.html.twig', [
             'form' => $form->createView(),
-            'qrCode' => $qrCode,
+            'qrCode' => $qrCode ?? null,
             'error' => $error ?? null
         ]);
     }

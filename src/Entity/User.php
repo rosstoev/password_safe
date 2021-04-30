@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="You already have an account!")
+ * @UniqueEntity(fields={"email"}, message="Вече има такъв акаунт!")
  */
 class User implements UserInterface
 {
@@ -53,6 +53,11 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\Column (type="string", length=255, nullable=true)
+     */
+    private $secret;
 
     public function __construct()
     {
@@ -194,5 +199,17 @@ class User implements UserInterface
     public function setIsGoogleAuthenticate(bool $isGoogleAuthenticate): void
     {
         $this->isGoogleAuthenticate = $isGoogleAuthenticate;
+    }
+
+    public function getSecret(): ?string
+    {
+        return $this->secret;
+    }
+
+    public function setSecret(string $secret): self
+    {
+        $this->secret = $secret;
+
+        return $this;
     }
 }
