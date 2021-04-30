@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    {% if edit is defined and edit != false %}
+        {% set title = "Редактирай Уебсайт" %}
+        {% set active = "edit-website" %}
+    {% else %}
+        {% set title = "Добави Уебсайт" %}
+        {% set active = "add-website" %}
+    {% endif %}
+    {% include "components/navbar.html.twig" with {"active" : active} %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <h1>{{ title }}</h1>
+            </div>
+        </div>
+        {% if error is defined and error is not null %}
+            <div class="row">
+                <div class="col-12 alert-primary">
+                    {{ error }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12">
+                {{ form_start(form) }}
+                {{ form_row(form.url) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form.save) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

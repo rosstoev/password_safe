@@ -17,4 +17,5 @@
 
 ###> php storm ###
 .idea
-###< php storm###
+.php-version
+###< php storm ###

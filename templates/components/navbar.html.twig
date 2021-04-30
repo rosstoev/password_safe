@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('home') }}">PassSafe</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <a class="nav-link {% if active == 'home' %}active{% endif %}" href="{{ path('home') }}">Начало</a>
+                {% if app.user is not null %}
+                    <a class="nav-link {% if active == 'dashboard' %}active{% endif %}" href="{{ path('user_dashboard') }}">Дашборд</a>
+                    <a class="nav-link {% if active == 'add-website' %}active{% endif %}" href="{{ path('user_website-data_manage') }}">Добави</a>
+                {% endif %}
+            </div>
+            <div class="navbar-nav mt-2 mt-lg-0 mr-sm-2">
+                {% if app.user is not null %}
+                    <span class="nav-link active">Здравей, {{ app.user.firstName }}</span>
+                    <span class="nav-link active">/</span>
+                    <a class="nav-link active" href="{{ path('logout') }}">Изход</a>
+                    {% else %}
+                <a class="nav-link active" href="{{ path('register') }}">Регистрация</a>
+                <span class="nav-link active">/</span>
+                <a class="nav-link active" href="{{ path('login') }}" >Логин</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="p-4"></div>

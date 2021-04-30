@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'components/navbar.html.twig' with {'active' : 'login'} %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto">
+                <h1>Level 2 проверка</h1>
+            </div>
+        </div>
+        <div class="py-3"></div>
+        {% if qrCode is defined and qrCode is not null %}
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <img src="{{ qrCode }}" alt="qr-code">
+                </div>
+            </div>
+        {% endif %}
+        <div class="py-3"></div>
+        {% if error is defined and error is not null %}
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto">
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12">
+                {{ form_start(form) }}
+                {{ form_row(form.code) }}
+                {{ form_row(form.check) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
