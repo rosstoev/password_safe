@@ -28,24 +28,29 @@ class RegistrationFormType extends AbstractType
 
         $builder->add('password', PasswordType::class, [
             'attr' => ['autocomplete' => "new-password"],
+           'label' => 'Парола',
            'constraints' => [
                new NotBlank()
            ]
         ]);
 
         $builder->add('firstName', TextType::class, [
+            'label' => 'Име',
             'constraints' =>[
                 new NotBlank()
             ]
         ]);
 
         $builder->add('familyName', TextType::class, [
+            'label' => 'Фамилия',
             'constraints' => [
                 new NotBlank()
             ]
         ]);
 
-        $builder->add('register', SubmitType::class);
+        $builder->add('register', SubmitType::class, [
+            'label' => 'Запази'
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -74,7 +74,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         $user = $userProvider->loadUserByUsername($username);
 
         if (!$user) {
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('Потребител, с такъв email адрес не съществува!');
         }
 
         return $user;
