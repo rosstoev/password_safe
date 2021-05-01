@@ -31,7 +31,9 @@ class LoginLevelTwoFormType extends AbstractType
         $builder->add('secret', HiddenType::class, [
             'data' => $encodedSecret
         ]);
-        $builder->add('code', TextType::class);
+        $builder->add('code', TextType::class, [
+            'label' => 'Код'
+        ]);
 
         $builder->add('check', SubmitType::class, [
             'label' => 'Провери'

@@ -57,7 +57,7 @@ class UserController extends AbstractController
     /**
      * @Route ("/website-data/manage/{websiteData}", name="website-data_manage", defaults={"websiteData": null})
      */
-    public function addWebsite(
+    public function manageWebsite(
         Request $request,
         WebsiteDataRepository $websiteDataRepository,
         UserRepository $userRepository,

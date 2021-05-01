@@ -32,7 +32,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $user = $this->userRepository->findOneBy(['email' => $username]);
 
         if (empty($user)) {
-            throw new UsernameNotFoundException(sprintf('User with email %s does not exist', $username));
+            throw new UsernameNotFoundException(sprintf('Потребител с email %s не същетсвува', $username));
         }
         return $user;
     }
@@ -40,7 +40,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
+            throw new UnsupportedUserException('Невалиден потребител');
         }
 
         return $user;
